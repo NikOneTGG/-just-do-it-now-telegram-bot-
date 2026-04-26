@@ -5,14 +5,13 @@ from aiogram.types import Message, CallbackQuery, InlineKeyboardMarkup, InlineKe
 from aiogram.fsm.context import FSMContext
 from aiogram.exceptions import TelegramRetryAfter
 from aiogram.fsm.state import StatesGroup, State
-from config import ADMIN_IDS
+from config import ADMIN_IDS, GYM_WORKOUTS
 from logger import logger
 from aiogram.exceptions import TelegramBadRequest
 import os
 import asyncio
-from keyboards import get_gym_exercise
-from datetime import date
 import random
+from datetime import date
 from db_instance import db
 
 router = Router()
@@ -25,6 +24,22 @@ if isinstance(ADMIN_IDS, int):
 else:
     ADMIN_LIST = list(ADMIN_IDS)
 
+# вспомогательная функция для зала
+def get_gym_exercise(muscle_group: str, level: str) -> str:
+    if level == "pro1":
+        return random.choice(GYM_WORKOUTS[muscle_group]["pro1"])
+    elif level == "pro2":
+        combined = GYM_WORKOUTS[muscle_group]["pro1"] + GYM_WORKOUTS[muscle_group]["pro2"]
+        return random.choice(combined)
+    elif level == "pro3":
+        combined = (GYM_WORKOUTS[muscle_group]["pro1"] +
+                    GYM_WORKOUTS[muscle_group]["pro2"] +
+                    GYM_WORKOUTS[muscle_group]["pro3"])
+        return random.choice(combined)
+    else:
+        return random.choice(GYM_WORKOUTS[muscle_group]["pro1"])
+
+# обработчик кнопки О нас
 @router.message(lambda message: message.text == "О нас")
 async def about_handler(message: Message):
     user_id = message.from_user.id
@@ -35,6 +50,7 @@ async def about_handler(message: Message):
     else:
         await message.answer("ТГК:\nhttps://t.me/JustDoItNEWS\nПоддержка: @JDINOWBOTSUPPORT")
 
+# FSM состояния
 class SetLevelState(StatesGroup):
     waiting_for_user_id = State()
     waiting_for_level = State()
@@ -49,6 +65,7 @@ class BroadcastState(StatesGroup):
 class DeleteUserState(StatesGroup):
     waiting_for_user_id = State()
 
+# клавиатуры админки
 def admin_keyboard():
     return InlineKeyboardMarkup(inline_keyboard=[
         [InlineKeyboardButton(text="Статистика", callback_data="admin_stats")],
@@ -74,21 +91,7 @@ def get_id_selection_keyboard(action: str):
         [InlineKeyboardButton(text="◀️ Назад", callback_data="admin_back")]
     ])
 
-@router.callback_query(F.data == "admin_grant_pro3")
-async def admin_grant_pro3(callback: CallbackQuery):
-    if callback.from_user.id not in ADMIN_LIST:
-        return
-    user_id = callback.from_user.id
-    user = await db.get_user(user_id)
-    if not user:
-        await callback.message.edit_text("Сначала зарегистрируйся через /start")
-        await callback.answer()
-        return
-    await db.update_user(user_id, level="pro3", gym_level="pro3", gym_workouts_count=30)
-    logger.info(f"Админ {user_id} выдал себе pro3")
-    await callback.message.edit_text("✅ Ты получил уровень pro3. Можешь тестировать.", reply_markup=back_button())
-    await callback.answer()
-
+# команды
 @router.message(Command("admin"))
 async def admin_panel(message: Message):
     if message.from_user.id not in ADMIN_LIST:
@@ -104,6 +107,23 @@ async def test_gym(message: Message):
     exercise = get_gym_exercise(group, level)
     await message.answer(f"Тест: {group} / {level}\n{exercise}")
 
+# выдать pro3 
+@router.callback_query(F.data == "admin_grant_pro3")
+async def admin_grant_pro3(callback: CallbackQuery):
+    if callback.from_user.id not in ADMIN_LIST:
+        return
+    user_id = callback.from_user.id
+    user = await db.get_user(user_id)
+    if not user:
+        await callback.message.edit_text("Сначала зарегистрируйся через /start")
+        await callback.answer()
+        return
+    await db.update_user(user_id, level="pro3", gym_level="pro3", gym_workouts_count=30)
+    logger.info(f"Админ {user_id} выдал себе pro3")
+    await callback.message.edit_text("✅ Ты получил уровень pro3. Можешь тестировать.", reply_markup=back_button())
+    await callback.answer()
+
+# установка уровня
 @router.callback_query(F.data == "admin_setlevel")
 async def admin_setlevel_start(callback: CallbackQuery, state: FSMContext):
     if callback.from_user.id not in ADMIN_LIST:
@@ -164,6 +184,7 @@ async def process_level(message: Message, state: FSMContext):
     await state.clear()
     await admin_panel(message)
 
+# накрутка страйка
 @router.callback_query(F.data == "admin_boost")
 async def admin_boost_start(callback: CallbackQuery, state: FSMContext):
     if callback.from_user.id not in ADMIN_LIST:
@@ -247,6 +268,7 @@ async def boost_cancel(callback: CallbackQuery, state: FSMContext):
     await state.clear()
     await callback.answer()
 
+# статистика 
 @router.callback_query(F.data == "admin_stats")
 async def admin_stats(callback: CallbackQuery):
     if callback.from_user.id not in ADMIN_LIST:
@@ -260,6 +282,7 @@ async def admin_stats(callback: CallbackQuery):
     await callback.message.answer(text, reply_markup=back_button())
     await callback.answer()
 
+# удалить пользователя
 @router.callback_query(F.data == "admin_delete_user")
 async def admin_delete_user_start(callback: CallbackQuery, state: FSMContext):
     if callback.from_user.id not in ADMIN_IDS:
@@ -303,6 +326,7 @@ async def admin_confirm_delete(callback: CallbackQuery):
     await callback.answer()
     await admin_panel(callback.message)
 
+# логи и прочее
 @router.callback_query(F.data == "admin_logs")
 async def admin_logs(callback: CallbackQuery):
     if callback.from_user.id not in ADMIN_LIST:
@@ -341,6 +365,7 @@ async def admin_clear_logs(callback: CallbackQuery):
         await callback.message.edit_text(f"Ошибка: {e}", reply_markup=back_button())
     await callback.answer()
 
+# рассылка 
 @router.callback_query(F.data == "admin_broadcast")
 async def admin_broadcast_start(callback: CallbackQuery, state: FSMContext):
     if callback.from_user.id not in ADMIN_IDS:
@@ -380,6 +405,7 @@ async def broadcast_send(message: Message, state: FSMContext):
     )
     await admin_panel(message)
 
+# назад и закрыть
 @router.callback_query(F.data == "admin_back")
 async def admin_back(callback: CallbackQuery):
     if callback.from_user.id not in ADMIN_LIST:

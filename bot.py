@@ -23,7 +23,7 @@ async def main():
     dp.include_router(profile.router)
     dp.include_router(misc.router)
     dp.include_router(admin.router)
-    dp.include_router(advanced.router)   # не переписан
+    dp.include_router(advanced.router)
 
     # глобальный обработчик ошибок
     @dp.errors()

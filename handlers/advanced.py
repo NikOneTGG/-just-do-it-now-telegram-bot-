@@ -1,17 +1,54 @@
 from aiogram import Router
 from aiogram.types import Message
+from aiogram.types import ReplyKeyboardMarkup, KeyboardButton
 from aiogram.fsm.context import FSMContext
 from datetime import date
 from config import GYM_WORKOUTS
-from keyboards import (
-    get_main_keyboard,
-    get_gym_main_keyboard,
-    get_gym_workout_keyboard,
-    get_gym_exercise
-)
 from db_instance import db
+import random
 
 router = Router()
+
+# вспомогательные функции
+def get_gym_exercise(muscle_group: str, level: str) -> str:
+    if level == "pro1":
+        return random.choice(GYM_WORKOUTS[muscle_group]["pro1"])
+    elif level == "pro2":
+        combined = GYM_WORKOUTS[muscle_group]["pro1"] + GYM_WORKOUTS[muscle_group]["pro2"]
+        return random.choice(combined)
+    elif level == "pro3":
+        combined = (GYM_WORKOUTS[muscle_group]["pro1"] +
+                    GYM_WORKOUTS[muscle_group]["pro2"] +
+                    GYM_WORKOUTS[muscle_group]["pro3"])
+        return random.choice(combined)
+    else:
+        return random.choice(GYM_WORKOUTS[muscle_group]["pro1"])
+
+def get_gym_main_keyboard():
+    chest_btn = KeyboardButton(text="Грудь")
+    back_btn = KeyboardButton(text="Спина")
+    legs_btn = KeyboardButton(text="Ноги")
+    shoulders_btn = KeyboardButton(text="Плечи")
+    arms_btn = KeyboardButton(text="Руки")
+    progress_btn = KeyboardButton(text="Мой прогресс")
+    leaderboard_btn = KeyboardButton(text="Лидерборд (зал)")
+    back_btn_main = KeyboardButton(text="В главное меню")
+    
+    keyboard_rows = [
+        [chest_btn, back_btn],
+        [legs_btn, shoulders_btn],
+        [arms_btn],
+        [progress_btn, leaderboard_btn],
+        [back_btn_main]
+    ]
+    return ReplyKeyboardMarkup(keyboard=keyboard_rows, resize_keyboard=True, input_field_placeholder="Выбери группу мышц")
+
+def get_gym_workout_keyboard():
+    done_btn = KeyboardButton(text="Готово")
+    next_btn = KeyboardButton(text="Следующее")
+    finish_btn = KeyboardButton(text="Закончить")
+    keyboard_rows = [[done_btn, next_btn], [finish_btn]]
+    return ReplyKeyboardMarkup(keyboard=keyboard_rows, resize_keyboard=True, input_field_placeholder="Что делаем?")
 
 ALLOWED_GROUPS = ["Грудь", "Спина", "Ноги", "Плечи", "Руки"]
 GROUP_ENGLISH = {
@@ -65,7 +102,7 @@ async def advanced_mode_entry(message: Message):
         remaining = 100 - total
         await message.answer(
             f"Продвинутый режим откроется после 100 тренировок.\nТебе осталось {remaining}.",
-            reply_markup=get_main_keyboard(user_id, user.get("level"))
+            reply_markup=ReplyKeyboardMarkup(keyboard=[], resize_keyboard=True)  # Заглушка, но можно вернуть главное меню
         )
 
 @router.message(lambda msg: msg.text in ALLOWED_GROUPS)
@@ -315,7 +352,8 @@ async def gym_leaderboard(message: Message):
 async def gym_back_to_main(message: Message, state: FSMContext):
     await state.clear()
     user = await db.get_user(message.from_user.id)
+    from inlinekey import main_menu
     await message.answer(
         "Главное меню",
-        reply_markup=get_main_keyboard(message.from_user.id, user.get("level") if user else None)
+        reply_markup=main_menu()
     )
