@@ -17,7 +17,7 @@ async def main():
     dp = Dispatcher(storage=MemoryStorage())
     dp.message.middleware(ThrottlingMiddleware(rate_limit=1.0))
 
-    # подключаем роутеры (только инлайн-версии)
+    # роутеры (только инлайн-версии)
     dp.include_router(goals.router)
     dp.include_router(workouts.router)
     dp.include_router(profile.router)
