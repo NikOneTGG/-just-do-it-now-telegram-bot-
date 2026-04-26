@@ -1,0 +1,12 @@
+__pycache__/
+*.pyc
+*.pyc.cython-312.pyc
+venv/
+.ssh/
+.ssh.pub
+.env
+logs/
+datafolder/
+*.db
+.history/
+.vscode/
