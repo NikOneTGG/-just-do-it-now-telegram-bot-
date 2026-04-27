@@ -849,3 +849,12 @@ TypeError: main.<locals>.global_error_handler() missing 1 required positional ar
 2026-03-24 18:18:42,876 - aiogram.dispatcher - ERROR - Failed to fetch updates - TelegramConflictError: Telegram server says - Conflict: terminated by other getUpdates request; make sure that only one bot instance is running
 2026-03-24 18:18:42,877 - aiogram.dispatcher - WARNING - Sleep for 4.975112 seconds and try again... (tryings = 9, bot id = 8653301704)
 2026-03-24 18:18:58,525 - aiogram.dispatcher - INFO - Connection established (tryings = 10, bot id = 8653301704)
+2026-04-27 05:50:50,661 - apscheduler.scheduler - INFO - Adding job tentatively -- it will be properly scheduled when the scheduler starts
+2026-04-27 05:50:50,667 - apscheduler.scheduler - INFO - Added job "workout_remind_print" to job store "default"
+2026-04-27 05:50:50,667 - apscheduler.scheduler - INFO - Scheduler started
+2026-04-27 05:50:50,667 - logger - INFO - Бот запущен и готов к работе
+2026-04-27 05:50:50,668 - aiogram.dispatcher - INFO - Start polling
+2026-04-27 05:50:51,307 - aiogram.dispatcher - INFO - Run polling for bot @JDINOWBOT id=8653301704 - 'JUST DO IT NOW'
+2026-04-27 05:50:55,200 - aiogram.event - INFO - Update id=554846804 is handled. Duration 516 ms by bot id=8653301704
+2026-04-27 05:58:57,700 - aiogram.event - INFO - Update id=554846805 is handled. Duration 1344 ms by bot id=8653301704
+2026-04-27 05:59:02,596 - aiogram.event - INFO - Update id=554846806 is handled. Duration 546 ms by bot id=8653301704

@@ -25,3 +25,12 @@ def gender_keyboard():
          InlineKeyboardButton(text="Женский", callback_data="gender_female")]
     ]
     return InlineKeyboardMarkup(inline_keyboard=buttons)
+
+def profile_menu():
+    buttons = [
+        [InlineKeyboardButton(text="Обнулить страйк", callback_data="reset_streak")],
+        [InlineKeyboardButton(text="Удалить мои данные", callback_data="delete_account")],
+        [InlineKeyboardButton(text="Напоминания", callback_data="toggle_reminder")],
+        [InlineKeyboardButton(text="В главное меню", callback_data="main_menu")]
+    ]
+    return InlineKeyboardMarkup(inline_keyboard=buttons)

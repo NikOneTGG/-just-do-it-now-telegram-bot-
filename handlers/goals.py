@@ -1,7 +1,7 @@
 from aiogram import Router, F
 from aiogram.types import Message, CallbackQuery
 from aiogram.filters import Command
-from inlinekey import main_menu, workout_menu, gender_keyboard
+from justdoitbot.handlers.inlinekey import main_menu, workout_menu, gender_keyboard
 from db_instance import db
 from logger import logger
 from config import WORKOUTS
