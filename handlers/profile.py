@@ -1,13 +1,12 @@
 from aiogram import Router, F
 from aiogram.types import CallbackQuery, InlineKeyboardMarkup, InlineKeyboardButton
 from datetime import date
-from inlinekey import workout_menu, main_menu, profile_menu
+from inlinekey import main_menu, profile_menu
 from db_instance import db
 from logger import logger
 
 router = Router()
 
-# названия уровней для красивого отображения
 LEVEL_NAMES = {
     "easy": "Начинающий",
     "normal": "Активный",
@@ -17,17 +16,11 @@ LEVEL_NAMES = {
     "pro3": "Мастер"
 }
 
-# профиль пользователя
-@router.callback_query(F.data == "profile")
-async def profile_handler(callback: CallbackQuery):
-    user_id = callback.from_user.id
+async def get_profile_text(user_id: int) -> str:
     user = await db.get_user(user_id)
     if not user:
-        await callback.message.answer("Сначала зарегистрируйся через /start")
-        await callback.answer()
-        return
+        return "Пользователь не найден"
 
-# цели
     goal_names = {
         "lose_weight": "Похудение",
         "gain_mass": "Набор массы",
@@ -44,19 +37,29 @@ async def profile_handler(callback: CallbackQuery):
         last_text = "Ещё не тренировался"
 
     response = (
-        f"ТВОЙ ПРОФИЛЬ\n\n"
+        f"Твой профиль\n\n"
         f"Цель: {goal_text}\n"
         f"Уровень: {LEVEL_NAMES.get(user.get('level', 'easy'))}\n"
         f"Страйк: {user.get('streak', 0)} дней\n"
         f"Всего тренировок: {user.get('total_workouts', 0)}\n"
         f"Последняя тренировка: {last_text}\n"
     )
+    return response
 
+@router.callback_query(F.data == "profile")
+async def profile_handler(callback: CallbackQuery):
+    user_id = callback.from_user.id
+    user = await db.get_user(user_id)
+    if not user:
+        await callback.message.answer("Сначала зарегистрируйся через /start")
+        await callback.answer()
+        return
+    response = await get_profile_text(user_id)
     await callback.message.delete()
     await callback.message.answer(response, reply_markup=profile_menu())
     await callback.answer()
 
-# сброс страйка
+# запрос на обнуление страйка
 @router.callback_query(F.data == "reset_streak")
 async def reset_streak_request(callback: CallbackQuery):
     user_id = callback.from_user.id
@@ -65,7 +68,7 @@ async def reset_streak_request(callback: CallbackQuery):
         await callback.message.answer("Сначала зарегистрируйся через /start")
         await callback.answer()
         return
-    
+
     confirm_keyboard = InlineKeyboardMarkup(inline_keyboard=[
         [InlineKeyboardButton(text="Да, обнулить", callback_data="confirm_reset_streak"),
          InlineKeyboardButton(text="Нет, отмена", callback_data="cancel_reset_streak")]
@@ -78,7 +81,7 @@ async def reset_streak_request(callback: CallbackQuery):
 
 # подтверждение сброса страйка
 @router.callback_query(F.data == "confirm_reset_streak")
-async def reset_streak_request(callback: CallbackQuery):
+async def confirm_reset_streak(callback: CallbackQuery):
     user_id = callback.from_user.id
     user = await db.get_user(user_id)
     if user:
@@ -96,11 +99,11 @@ async def cancel_reset_streak(callback: CallbackQuery):
     await callback.message.edit_text("Отмена", reply_markup=profile_menu())
     await callback.answer()
 
-# удаление профиля
+# запрос на удаление аккаунта
 @router.callback_query(F.data == "delete_account")
 async def delete_account_request(callback: CallbackQuery):
     user_id = callback.from_user.id
-    user = await db.get_user
+    user = await db.get_user(user_id)
     if not user:
         await callback.message.answer("Сначала зарегистрируйся через /start")
         await callback.answer()
@@ -116,22 +119,46 @@ async def delete_account_request(callback: CallbackQuery):
     )
     await callback.answer()
 
-# подтверждение удаления профиля
+# подтверждение удаления
 @router.callback_query(F.data == "confirm_delete_account")
 async def confirm_delete_account(callback: CallbackQuery):
     user_id = callback.from_user.id
-    user = await db.get_user(user_id)
-    logger.info(f"Пользователь {user_id} удалил свой аккаунт")
+    await db.delete_user(user_id)
+    logger.info(f"Пользователь {user_id} удалил аккаунт")
     await callback.message.edit_text(
-        "Ваши данные были удалены\nЧтобы начать заново, напишите /start",
-        reply_markup=InlineKeyboardMarkup(inline_keyboard=[
-            [InlineKeyboardButton(text="Начать", callback_data="restart")]
-        ])
+        "Ваши данные удалены.\nНапишите /start, чтобы начать заново."
     )
     await callback.answer()
-# отмена удаления профиля
+
+# отмена удаления
 @router.callback_query(F.data == "cancel_delete_account")
 async def cancel_delete_account(callback: CallbackQuery):
     await callback.message.edit_text("Отменено", reply_markup=profile_menu())
     await callback.answer()
 
+# переключение напоминаний
+@router.callback_query(F.data == "toggle_reminder")
+async def toggle_reminder(callback: CallbackQuery):
+    user_id = callback.from_user.id
+    user = await db.get_user(user_id)
+    if not user:
+        await callback.message.answer("Сначала зарегистрируйся через /start")
+        await callback.answer()
+        return
+
+    current = user.get("reminder_enabled", 1)
+    new_value = 0 if current else 1
+    await db.update_user(user_id, reminder_enabled=new_value)
+    status = "включены" if new_value == 1 else "отключены"
+    await callback.answer(f"Напоминания {status}.", show_alert=True)
+
+    await callback.message.delete()
+    new_text = await get_profile_text(user_id)
+    await callback.message.answer(new_text, reply_markup=profile_menu())
+    await callback.answer()
+
+# рестарт после удаления
+@router.callback_query(F.data == "restart")
+async def restart_account(callback: CallbackQuery):
+    await callback.message.answer("/start")
+    await callback.answer()

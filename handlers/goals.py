@@ -1,7 +1,7 @@
 from aiogram import Router, F
 from aiogram.types import Message, CallbackQuery
 from aiogram.filters import Command
-from justdoitbot.handlers.inlinekey import main_menu, workout_menu, gender_keyboard
+from inlinekey import main_menu, workout_menu, gender_keyboard
 from db_instance import db
 from logger import logger
 from config import WORKOUTS
@@ -57,6 +57,8 @@ async def cmd_start(message: Message):
     if user["gender"] is None:
         await message.answer("Укажи свой пол:", reply_markup=gender_keyboard())
     else:
+        temp_msg = await message.answer("ㅤ")
+        await temp_msg.delete()
         await message.answer(
             "Ну, привет.\nТы хочешь похудеть, набрать массу или подкачаться?",
             reply_markup=main_menu()
@@ -76,8 +78,8 @@ async def set_gender(callback: CallbackQuery):
     await callback.answer()
 
 # похудение
-@router.callback_query(F.data == "goal_lose")
-async def goal_lose(callback: CallbackQuery):
+@router.callback_query(F.data == "lose_weight")
+async def lose_weight(callback: CallbackQuery):
     user_id = callback.from_user.id
     user = await db.get_user(user_id)
     if not user:
@@ -99,15 +101,16 @@ async def goal_lose(callback: CallbackQuery):
     await db.save_user(user)
 
     await callback.message.delete()
+    workout_menu_with_gender = workout_menu(gender=user.get("gender"))
     await callback.message.answer(
         f"Худеть так худеть...\n\nТвоё задание:\n{workout}",
-        reply_markup=workout_menu()
+        reply_markup=workout_menu_with_gender
     )
     await callback.answer()
 
 # набор массы
-@router.callback_query(F.data == "goal_gain")
-async def goal_gain(callback: CallbackQuery):
+@router.callback_query(F.data == "gain_mass")
+async def gain_mass(callback: CallbackQuery):
     user_id = callback.from_user.id
     user = await db.get_user(user_id)
     if not user:
@@ -129,15 +132,16 @@ async def goal_gain(callback: CallbackQuery):
     await db.save_user(user)
 
     await callback.message.delete()
+    workout_menu_with_gender = workout_menu(gender=user.get("gender"))
     await callback.message.answer(
         f"Набираем массу...\n\nТвоё задание:\n{workout}",
-        reply_markup=workout_menu()
+        reply_markup=workout_menu_with_gender
     )
     await callback.answer()
 
 # силовые упражнения(подкачаться)
-@router.callback_query(F.data == "goal_fit")
-async def goal_fit(callback: CallbackQuery):
+@router.callback_query(F.data == "fit")
+async def fit(callback: CallbackQuery):
     user_id = callback.from_user.id
     user = await db.get_user(user_id)
     if not user:
@@ -159,9 +163,10 @@ async def goal_fit(callback: CallbackQuery):
     await db.save_user(user)
 
     await callback.message.delete()
+    workout_menu_with_gender = workout_menu(gender=user.get("gender"))
     await callback.message.answer(
         f"Подкачка...\n\nТвоё задание:\n{workout}",
-        reply_markup=workout_menu()
+        reply_markup=workout_menu_with_gender
     )
     await callback.answer()
 

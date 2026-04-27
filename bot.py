@@ -7,6 +7,8 @@ from logger import logger
 from handlers import goals, workouts, profile, misc, admin, advanced
 from utils.scheduler import setup_scheduler
 from middlewares.throttling import ThrottlingMiddleware
+from middlewares.auth import AuthMiddleware
+from handlers import advanced
 from db_instance import db
 
 async def main():
@@ -17,19 +19,15 @@ async def main():
     dp = Dispatcher(storage=MemoryStorage())
     dp.message.middleware(ThrottlingMiddleware(rate_limit=1.0))
 
-    # роутеры (только инлайн-версии)
+    # роутеры
     dp.include_router(goals.router)
     dp.include_router(workouts.router)
     dp.include_router(profile.router)
     dp.include_router(misc.router)
     dp.include_router(admin.router)
     dp.include_router(advanced.router)
-
-    # глобальный обработчик ошибок
-    @dp.errors()
-    async def global_error_handler(update, exception):
-        logger.exception(f"Ошибка: {update}\n{exception}")
-        return True
+    dp.message.middleware(AuthMiddleware())
+    dp.callback_query.middleware(AuthMiddleware())
 
     # планировщик
     setup_scheduler(bot)

@@ -13,7 +13,6 @@ import asyncio
 import random
 from datetime import date
 from db_instance import db
-from advanced import get_gym_exercise
 
 router = Router()
 
@@ -24,6 +23,20 @@ if isinstance(ADMIN_IDS, int):
     ADMIN_LIST = [ADMIN_IDS]
 else:
     ADMIN_LIST = list(ADMIN_IDS)
+
+def get_gym_exercise(muscle_group: str, level: str) -> str:
+    if level == "pro1":
+        return random.choice(GYM_WORKOUTS[muscle_group]["pro1"])
+    elif level == "pro2":
+        combined = GYM_WORKOUTS[muscle_group]["pro1"] + GYM_WORKOUTS[muscle_group]["pro2"]
+        return random.choice(combined)
+    elif level == "pro3":
+        combined = (GYM_WORKOUTS[muscle_group]["pro1"] +
+                    GYM_WORKOUTS[muscle_group]["pro2"] +
+                    GYM_WORKOUTS[muscle_group]["pro3"])
+        return random.choice(combined)
+    else:
+        return random.choice(GYM_WORKOUTS[muscle_group]["pro1"])
 
 # обработчик кнопки О нас
 @router.message(lambda message: message.text == "О нас")
