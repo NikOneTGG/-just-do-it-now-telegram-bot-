@@ -3096,3 +3096,70 @@ aiogram.exceptions.TelegramBadRequest: Telegram server says - Bad Request: text 
 2026-04-27 12:07:01,383 - aiogram.event - INFO - Update id=554847199 is handled. Duration 594 ms by bot id=8653301704
 2026-04-27 12:07:03,618 - aiogram.event - INFO - Update id=554847200 is handled. Duration 453 ms by bot id=8653301704
 2026-04-27 12:08:18,117 - aiogram.event - INFO - Update id=554847201 is not handled. Duration 0 ms by bot id=8653301704
+2026-05-01 21:59:35,994 - apscheduler.scheduler - INFO - Adding job tentatively -- it will be properly scheduled when the scheduler starts
+2026-05-01 21:59:35,995 - apscheduler.scheduler - INFO - Added job "workout_remind_print" to job store "default"
+2026-05-01 21:59:35,995 - apscheduler.scheduler - INFO - Scheduler started
+2026-05-01 21:59:35,995 - logger - INFO - Бот запущен и готов к работе
+2026-05-01 21:59:35,996 - aiogram.dispatcher - INFO - Start polling
+2026-05-01 21:59:36,881 - aiogram.dispatcher - INFO - Run polling for bot @JDINOWBOT id=8653301704 - 'JUST DO IT NOW'
+2026-05-01 21:59:40,034 - aiogram.event - INFO - Update id=554847402 is handled. Duration 1183 ms by bot id=8653301704
+2026-05-01 21:59:43,379 - aiogram.event - INFO - Update id=554847403 is handled. Duration 1777 ms by bot id=8653301704
+2026-05-01 21:59:45,380 - aiogram.event - INFO - Update id=554847404 is handled. Duration 742 ms by bot id=8653301704
+2026-05-01 21:59:51,845 - aiogram.event - INFO - Update id=554847405 is handled. Duration 731 ms by bot id=8653301704
+2026-05-01 21:59:54,043 - aiogram.event - INFO - Update id=554847406 is handled. Duration 535 ms by bot id=8653301704
+2026-05-01 21:59:56,113 - aiogram.event - INFO - Update id=554847407 is handled. Duration 1187 ms by bot id=8653301704
+2026-05-01 21:59:58,164 - aiogram.event - INFO - Update id=554847408 is handled. Duration 768 ms by bot id=8653301704
+2026-05-01 22:00:00,299 - aiogram.event - INFO - Update id=554847409 is handled. Duration 604 ms by bot id=8653301704
+2026-05-01 22:00:04,159 - logger - INFO - Админ 1445047630 установил уровень pro3 для 1445047630
+2026-05-01 22:00:05,006 - aiogram.event - INFO - Update id=554847410 is handled. Duration 861 ms by bot id=8653301704
+2026-05-01 22:00:08,611 - aiogram.event - INFO - Update id=554847411 is handled. Duration 397 ms by bot id=8653301704
+2026-05-01 22:00:10,833 - aiogram.event - INFO - Update id=554847412 is handled. Duration 524 ms by bot id=8653301704
+2026-05-01 22:00:12,994 - aiogram.event - INFO - Update id=554847413 is handled. Duration 454 ms by bot id=8653301704
+2026-05-01 22:00:22,574 - aiogram.event - INFO - Update id=554847414 is handled. Duration 552 ms by bot id=8653301704
+2026-05-01 22:00:23,915 - aiogram.event - INFO - Update id=554847415 is handled. Duration 463 ms by bot id=8653301704
+2026-05-01 22:00:25,478 - aiogram.event - INFO - Update id=554847416 is handled. Duration 489 ms by bot id=8653301704
+2026-05-01 22:00:26,375 - aiogram.event - INFO - Update id=554847417 is handled. Duration 430 ms by bot id=8653301704
+2026-05-01 22:00:27,232 - aiogram.event - INFO - Update id=554847418 is handled. Duration 457 ms by bot id=8653301704
+2026-05-01 22:00:28,394 - aiogram.event - INFO - Update id=554847419 is handled. Duration 657 ms by bot id=8653301704
+2026-05-01 22:00:29,163 - aiogram.event - INFO - Update id=554847420 is handled. Duration 503 ms by bot id=8653301704
+2026-05-01 22:00:30,092 - aiogram.event - INFO - Update id=554847421 is handled. Duration 569 ms by bot id=8653301704
+2026-05-01 22:00:31,092 - aiogram.event - INFO - Update id=554847422 is handled. Duration 698 ms by bot id=8653301704
+2026-05-01 22:00:31,993 - aiogram.event - INFO - Update id=554847423 is handled. Duration 674 ms by bot id=8653301704
+2026-05-01 22:00:36,640 - aiogram.event - INFO - Update id=554847424 is handled. Duration 1054 ms by bot id=8653301704
+2026-05-01 22:00:37,845 - aiogram.event - INFO - Update id=554847425 is handled. Duration 443 ms by bot id=8653301704
+2026-05-01 22:00:38,835 - aiogram.event - INFO - Update id=554847426 is handled. Duration 189 ms by bot id=8653301704
+2026-05-01 22:00:42,344 - aiogram.event - INFO - Update id=554847427 is handled. Duration 444 ms by bot id=8653301704
+2026-05-01 22:00:44,039 - aiogram.event - INFO - Update id=554847428 is handled. Duration 431 ms by bot id=8653301704
+2026-05-01 22:00:45,445 - aiogram.event - INFO - Update id=554847429 is handled. Duration 435 ms by bot id=8653301704
+2026-05-01 22:00:46,635 - aiogram.event - INFO - Update id=554847430 is handled. Duration 496 ms by bot id=8653301704
+2026-05-01 22:00:47,791 - aiogram.event - INFO - Update id=554847431 is handled. Duration 294 ms by bot id=8653301704
+2026-05-01 22:00:52,077 - aiogram.event - INFO - Update id=554847432 is handled. Duration 455 ms by bot id=8653301704
+2026-05-01 22:00:53,429 - aiogram.event - INFO - Update id=554847433 is handled. Duration 499 ms by bot id=8653301704
+2026-05-01 22:00:54,156 - aiogram.event - INFO - Update id=554847434 is handled. Duration 291 ms by bot id=8653301704
+2026-05-01 22:00:55,504 - aiogram.event - INFO - Update id=554847435 is handled. Duration 298 ms by bot id=8653301704
+2026-05-01 22:00:57,288 - aiogram.event - INFO - Update id=554847436 is handled. Duration 289 ms by bot id=8653301704
+2026-05-01 22:00:58,915 - aiogram.event - INFO - Update id=554847437 is handled. Duration 425 ms by bot id=8653301704
+2026-05-01 22:01:06,272 - aiogram.event - INFO - Update id=554847438 is handled. Duration 307 ms by bot id=8653301704
+2026-05-01 22:01:09,011 - aiogram.event - INFO - Update id=554847439 is handled. Duration 289 ms by bot id=8653301704
+2026-05-01 22:01:11,454 - aiogram.event - INFO - Update id=554847440 is handled. Duration 959 ms by bot id=8653301704
+2026-05-01 22:01:12,266 - aiogram.event - INFO - Update id=554847441 is handled. Duration 441 ms by bot id=8653301704
+2026-05-01 22:01:13,395 - aiogram.event - INFO - Update id=554847442 is handled. Duration 412 ms by bot id=8653301704
+2026-05-01 22:01:15,777 - aiogram.event - INFO - Update id=554847443 is handled. Duration 572 ms by bot id=8653301704
+2026-05-01 22:01:18,128 - aiogram.event - INFO - Update id=554847444 is handled. Duration 627 ms by bot id=8653301704
+2026-05-01 22:01:21,342 - aiogram.event - INFO - Update id=554847445 is handled. Duration 900 ms by bot id=8653301704
+2026-05-01 22:01:27,343 - aiogram.event - INFO - Update id=554847446 is handled. Duration 295 ms by bot id=8653301704
+2026-05-01 22:01:28,307 - logger - INFO - Пользователь 1445047630 обнулил страйк (было 1)
+2026-05-01 22:01:28,581 - aiogram.event - INFO - Update id=554847447 is handled. Duration 283 ms by bot id=8653301704
+2026-05-01 22:01:32,878 - aiogram.event - INFO - Update id=554847448 is handled. Duration 433 ms by bot id=8653301704
+2026-05-01 22:01:34,657 - aiogram.event - INFO - Update id=554847449 is handled. Duration 447 ms by bot id=8653301704
+2026-05-01 22:01:35,819 - aiogram.event - INFO - Update id=554847450 is handled. Duration 312 ms by bot id=8653301704
+2026-05-01 22:02:04,223 - aiogram.event - INFO - Update id=554847451 is handled. Duration 1438 ms by bot id=8653301704
+2026-05-01 22:02:05,468 - aiogram.event - INFO - Update id=554847452 is handled. Duration 459 ms by bot id=8653301704
+2026-05-01 22:02:06,738 - aiogram.event - INFO - Update id=554847453 is handled. Duration 467 ms by bot id=8653301704
+2026-05-01 22:02:07,983 - aiogram.event - INFO - Update id=554847454 is handled. Duration 447 ms by bot id=8653301704
+2026-05-01 22:02:09,513 - aiogram.event - INFO - Update id=554847455 is handled. Duration 794 ms by bot id=8653301704
+2026-05-01 22:02:10,362 - aiogram.event - INFO - Update id=554847456 is handled. Duration 308 ms by bot id=8653301704
+2026-05-01 22:02:11,713 - logger - INFO - Пользователь 1445047630 удалил аккаунт
+2026-05-01 22:02:12,039 - aiogram.event - INFO - Update id=554847457 is handled. Duration 337 ms by bot id=8653301704
+2026-05-01 22:02:13,525 - aiogram.event - INFO - Update id=554847458 is handled. Duration 167 ms by bot id=8653301704
+2026-05-01 22:02:16,217 - aiogram.event - INFO - Update id=554847459 is handled. Duration 516 ms by bot id=8653301704

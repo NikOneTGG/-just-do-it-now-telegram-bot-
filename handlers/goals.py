@@ -1,5 +1,5 @@
 from aiogram import Router, F
-from aiogram.types import Message, CallbackQuery
+from aiogram.types import Message, CallbackQuery, ReplyKeyboardRemove
 from aiogram.filters import Command
 from inlinekey import main_menu, workout_menu, gender_keyboard
 from db_instance import db
@@ -32,6 +32,7 @@ def reset_progress(user: dict):
 async def cmd_start(message: Message):
     user_id = message.from_user.id
     username = message.from_user.username or message.from_user.full_name
+    reply_markup=ReplyKeyboardRemove()
 
     user = await db.get_user(user_id)
     if not user:
