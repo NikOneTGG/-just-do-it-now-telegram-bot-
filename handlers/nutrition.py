@@ -31,9 +31,15 @@ async def send_meal(callback: CallbackQuery):
     goal = user.get("goal", "get_fit")
     meals = MEALS.get(goal, MEALS["get_fit"])
     options = meals.get(meal_type, [])
+    type_ru = {
+        "breakfast": "Завтрак",
+        "lunch": "Обед",
+        "dinner": "Ужин",
+        "snack": "Перекус"
+    }.get(meal_type, meal_type.capitalize())
     if options:
         meal = random.choice(options)
-        text = f"{meal_type.capitalize()}:\n{meal}"
+        text = f"{type_ru}:\n{meal}"
     else:
         text = "Нет рекомендаций."
     await callback.message.edit_text(text, reply_markup=nutrition_keyboard())

@@ -6,3 +6,4 @@ datafolder/
 logs/
 *.log
 venv/
+auth.py

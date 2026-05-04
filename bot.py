@@ -27,8 +27,8 @@ async def main():
     dp.include_router(advanced.router)
     dp.include_router(nutrition.router)
     
-    dp.message.middleware(AuthMiddleware())
-    dp.callback_query.middleware(AuthMiddleware())
+#    dp.message.middleware(AuthMiddleware())
+#    dp.callback_query.middleware(AuthMiddleware())
 
     # планировщик
     setup_scheduler(bot)
