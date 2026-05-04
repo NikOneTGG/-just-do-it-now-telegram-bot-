@@ -3163,3 +3163,245 @@ aiogram.exceptions.TelegramBadRequest: Telegram server says - Bad Request: text 
 2026-05-01 22:02:12,039 - aiogram.event - INFO - Update id=554847457 is handled. Duration 337 ms by bot id=8653301704
 2026-05-01 22:02:13,525 - aiogram.event - INFO - Update id=554847458 is handled. Duration 167 ms by bot id=8653301704
 2026-05-01 22:02:16,217 - aiogram.event - INFO - Update id=554847459 is handled. Duration 516 ms by bot id=8653301704
+2026-05-03 06:04:43,620 - apscheduler.scheduler - INFO - Adding job tentatively -- it will be properly scheduled when the scheduler starts
+2026-05-03 06:04:43,621 - apscheduler.scheduler - INFO - Added job "workout_remind_print" to job store "default"
+2026-05-03 06:04:43,621 - apscheduler.scheduler - INFO - Scheduler started
+2026-05-03 06:04:43,621 - logger - INFO - Бот запущен и готов к работе
+2026-05-03 06:04:43,622 - aiogram.dispatcher - INFO - Start polling
+2026-05-03 06:04:44,138 - aiogram.dispatcher - INFO - Run polling for bot @JDINOWBOT id=8653301704 - 'JUST DO IT NOW'
+2026-05-03 06:04:44,259 - aiogram.event - INFO - Update id=554847460 is not handled. Duration 2 ms by bot id=8653301704
+2026-05-03 06:04:44,778 - aiogram.event - INFO - Update id=554847461 is not handled. Duration 520 ms by bot id=8653301704
+2026-05-03 06:04:44,778 - aiogram.event - ERROR - Cause exception while process update id=554847461 by bot id=8653301704
+TelegramForbiddenError: Telegram server says - Forbidden: bot was blocked by the user
+Traceback (most recent call last):
+  File "/usr/lib/python3.14/site-packages/aiogram/dispatcher/dispatcher.py", line 320, in _process_update
+    response = await self.feed_update(bot, update, **kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.14/site-packages/aiogram/dispatcher/dispatcher.py", line 164, in feed_update
+    response = await self.update.wrap_outer_middleware(
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<7 lines>...
+    )
+    ^
+  File "/usr/lib/python3.14/site-packages/aiogram/dispatcher/middlewares/error.py", line 27, in __call__
+    return await handler(event, data)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.14/site-packages/aiogram/dispatcher/middlewares/user_context.py", line 58, in __call__
+    return await handler(event, data)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.14/site-packages/aiogram/fsm/middleware.py", line 43, in __call__
+    return await handler(event, data)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.14/site-packages/aiogram/dispatcher/event/telegram.py", line 126, in trigger
+    return await wrapped_inner(event, kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.14/site-packages/aiogram/dispatcher/event/handler.py", line 71, in call
+    return await wrapped()
+           ^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.14/site-packages/aiogram/dispatcher/dispatcher.py", line 283, in _listen_update
+    return await self.propagate_event(update_type=update_type, event=event, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.14/site-packages/aiogram/dispatcher/router.py", line 161, in propagate_event
+    return await observer.wrap_outer_middleware(_wrapped, event=event, data=kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.14/site-packages/aiogram/dispatcher/router.py", line 153, in _wrapped
+    return await self._propagate_event(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<4 lines>...
+    )
+    ^
+  File "/usr/lib/python3.14/site-packages/aiogram/dispatcher/router.py", line 189, in _propagate_event
+    response = await router.propagate_event(update_type=update_type, event=event, **kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.14/site-packages/aiogram/dispatcher/router.py", line 161, in propagate_event
+    return await observer.wrap_outer_middleware(_wrapped, event=event, data=kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.14/site-packages/aiogram/dispatcher/router.py", line 153, in _wrapped
+    return await self._propagate_event(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<4 lines>...
+    )
+    ^
+  File "/usr/lib/python3.14/site-packages/aiogram/dispatcher/router.py", line 181, in _propagate_event
+    response = await observer.trigger(event, **kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.14/site-packages/aiogram/dispatcher/event/telegram.py", line 126, in trigger
+    return await wrapped_inner(event, kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/run/media/nikonetg/ea8d9669-c782-443d-9386-c8c78fe82d93/vsc/justdoitbot/middlewares/throttling.py", line 18, in __call__
+    return await handler(event, data)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/run/media/nikonetg/ea8d9669-c782-443d-9386-c8c78fe82d93/vsc/justdoitbot/middlewares/auth.py", line 32, in __call__
+    await event.answer(MAINTENANCE_TEXT, reply_markup=SUPPORT_BUTTON)
+  File "/usr/lib/python3.14/site-packages/aiogram/methods/base.py", line 82, in emit
+    return await bot(self)
+           ^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.14/site-packages/aiogram/client/bot.py", line 487, in __call__
+    return await self.session(self, method, timeout=request_timeout)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.14/site-packages/aiogram/client/session/base.py", line 259, in __call__
+    return cast(TelegramType, await middleware(bot, method))
+                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.14/site-packages/aiogram/client/session/aiohttp.py", line 177, in make_request
+    response = self.check_response(
+        bot=bot,
+    ...<2 lines>...
+        content=raw_result,
+    )
+  File "/usr/lib/python3.14/site-packages/aiogram/client/session/base.py", line 129, in check_response
+    raise TelegramForbiddenError(method=method, message=description)
+aiogram.exceptions.TelegramForbiddenError: Telegram server says - Forbidden: bot was blocked by the user
+2026-05-03 06:05:11,361 - aiogram.event - INFO - Update id=554847462 is handled. Duration 135 ms by bot id=8653301704
+2026-05-03 06:32:09,736 - apscheduler.scheduler - INFO - Adding job tentatively -- it will be properly scheduled when the scheduler starts
+2026-05-03 06:32:09,736 - apscheduler.scheduler - INFO - Added job "workout_remind_print" to job store "default"
+2026-05-03 06:32:09,736 - apscheduler.scheduler - INFO - Scheduler started
+2026-05-03 06:32:09,736 - logger - INFO - Бот запущен и готов к работе
+2026-05-03 06:32:09,738 - aiogram.dispatcher - INFO - Start polling
+2026-05-03 06:32:10,268 - aiogram.dispatcher - INFO - Run polling for bot @JDINOWBOT id=8653301704 - 'JUST DO IT NOW'
+2026-05-03 06:32:16,737 - aiogram.event - INFO - Update id=554847463 is handled. Duration 529 ms by bot id=8653301704
+2026-05-03 06:32:19,468 - aiogram.event - INFO - Update id=554847464 is not handled. Duration 1 ms by bot id=8653301704
+2026-05-03 06:32:19,584 - aiogram.event - INFO - Update id=554847465 is not handled. Duration 1 ms by bot id=8653301704
+2026-05-03 06:32:19,886 - aiogram.event - INFO - Update id=554847466 is not handled. Duration 1 ms by bot id=8653301704
+2026-05-03 06:32:20,010 - aiogram.event - INFO - Update id=554847467 is not handled. Duration 1 ms by bot id=8653301704
+2026-05-03 06:32:20,311 - aiogram.event - INFO - Update id=554847468 is not handled. Duration 1 ms by bot id=8653301704
+2026-05-03 06:32:20,772 - aiogram.dispatcher - ERROR - Failed to fetch updates - TelegramNetworkError: HTTP Client says - ServerDisconnectedError: Server disconnected
+2026-05-03 06:32:20,772 - aiogram.dispatcher - WARNING - Sleep for 1.000000 seconds and try again... (tryings = 0, bot id = 8653301704)
+2026-05-03 06:32:21,023 - aiogram.event - INFO - Update id=554847469 is not handled. Duration 398 ms by bot id=8653301704
+2026-05-03 06:32:21,024 - aiogram.dispatcher - INFO - Polling stopped
+2026-05-03 06:32:21,024 - aiogram.dispatcher - INFO - Polling stopped for bot @JDINOWBOT id=8653301704 - 'JUST DO IT NOW'
+2026-05-03 06:32:21,025 - logger - INFO - Сессия закрыта
+2026-05-03 06:34:29,841 - apscheduler.scheduler - INFO - Adding job tentatively -- it will be properly scheduled when the scheduler starts
+2026-05-03 06:34:29,841 - apscheduler.scheduler - INFO - Added job "workout_remind_print" to job store "default"
+2026-05-03 06:34:29,841 - apscheduler.scheduler - INFO - Scheduler started
+2026-05-03 06:34:29,841 - logger - INFO - Бот запущен и готов к работе
+2026-05-03 06:34:29,843 - aiogram.dispatcher - INFO - Start polling
+2026-05-03 06:34:30,329 - aiogram.dispatcher - INFO - Run polling for bot @JDINOWBOT id=8653301704 - 'JUST DO IT NOW'
+2026-05-03 06:34:38,330 - aiogram.event - INFO - Update id=554847470 is handled. Duration 791 ms by bot id=8653301704
+2026-05-03 06:35:14,874 - apscheduler.scheduler - INFO - Adding job tentatively -- it will be properly scheduled when the scheduler starts
+2026-05-03 06:35:14,874 - apscheduler.scheduler - INFO - Added job "workout_remind_print" to job store "default"
+2026-05-03 06:35:14,874 - apscheduler.scheduler - INFO - Scheduler started
+2026-05-03 06:35:14,874 - logger - INFO - Бот запущен и готов к работе
+2026-05-03 06:35:14,875 - aiogram.dispatcher - INFO - Start polling
+2026-05-03 06:35:15,467 - aiogram.dispatcher - INFO - Run polling for bot @JDINOWBOT id=8653301704 - 'JUST DO IT NOW'
+2026-05-03 06:35:26,336 - aiogram.event - INFO - Update id=554847471 is not handled. Duration 1 ms by bot id=8653301704
+2026-05-03 06:35:26,336 - aiogram.event - ERROR - Cause exception while process update id=554847471 by bot id=8653301704
+TypeError: Message.answer() missing 1 required positional argument: 'text'
+Traceback (most recent call last):
+  File "/usr/lib/python3.14/site-packages/aiogram/dispatcher/dispatcher.py", line 320, in _process_update
+    response = await self.feed_update(bot, update, **kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.14/site-packages/aiogram/dispatcher/dispatcher.py", line 164, in feed_update
+    response = await self.update.wrap_outer_middleware(
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<7 lines>...
+    )
+    ^
+  File "/usr/lib/python3.14/site-packages/aiogram/dispatcher/middlewares/error.py", line 27, in __call__
+    return await handler(event, data)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.14/site-packages/aiogram/dispatcher/middlewares/user_context.py", line 58, in __call__
+    return await handler(event, data)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.14/site-packages/aiogram/fsm/middleware.py", line 43, in __call__
+    return await handler(event, data)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.14/site-packages/aiogram/dispatcher/event/telegram.py", line 126, in trigger
+    return await wrapped_inner(event, kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.14/site-packages/aiogram/dispatcher/event/handler.py", line 71, in call
+    return await wrapped()
+           ^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.14/site-packages/aiogram/dispatcher/dispatcher.py", line 283, in _listen_update
+    return await self.propagate_event(update_type=update_type, event=event, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.14/site-packages/aiogram/dispatcher/router.py", line 161, in propagate_event
+    return await observer.wrap_outer_middleware(_wrapped, event=event, data=kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.14/site-packages/aiogram/dispatcher/router.py", line 153, in _wrapped
+    return await self._propagate_event(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<4 lines>...
+    )
+    ^
+  File "/usr/lib/python3.14/site-packages/aiogram/dispatcher/router.py", line 189, in _propagate_event
+    response = await router.propagate_event(update_type=update_type, event=event, **kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.14/site-packages/aiogram/dispatcher/router.py", line 161, in propagate_event
+    return await observer.wrap_outer_middleware(_wrapped, event=event, data=kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.14/site-packages/aiogram/dispatcher/router.py", line 153, in _wrapped
+    return await self._propagate_event(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<4 lines>...
+    )
+    ^
+  File "/usr/lib/python3.14/site-packages/aiogram/dispatcher/router.py", line 181, in _propagate_event
+    response = await observer.trigger(event, **kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.14/site-packages/aiogram/dispatcher/event/telegram.py", line 126, in trigger
+    return await wrapped_inner(event, kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/run/media/nikonetg/ea8d9669-c782-443d-9386-c8c78fe82d93/vsc/justdoitbot/middlewares/throttling.py", line 18, in __call__
+    return await handler(event, data)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/run/media/nikonetg/ea8d9669-c782-443d-9386-c8c78fe82d93/vsc/justdoitbot/middlewares/auth.py", line 40, in __call__
+    return await handler(event, data)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.14/site-packages/aiogram/dispatcher/event/handler.py", line 71, in call
+    return await wrapped()
+           ^^^^^^^^^^^^^^^
+  File "/run/media/nikonetg/ea8d9669-c782-443d-9386-c8c78fe82d93/vsc/justdoitbot/handlers/goals.py", line 35, in cmd_start
+    await message.answer(reply_markup=types.ReplyKeyboardRemove())
+          ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+TypeError: Message.answer() missing 1 required positional argument: 'text'
+2026-05-03 06:39:59,558 - apscheduler.scheduler - INFO - Adding job tentatively -- it will be properly scheduled when the scheduler starts
+2026-05-03 06:39:59,559 - apscheduler.scheduler - INFO - Added job "workout_remind_print" to job store "default"
+2026-05-03 06:39:59,559 - apscheduler.scheduler - INFO - Scheduler started
+2026-05-03 06:39:59,559 - logger - INFO - Бот запущен и готов к работе
+2026-05-03 06:39:59,560 - aiogram.dispatcher - INFO - Start polling
+2026-05-03 06:40:00,086 - aiogram.dispatcher - INFO - Run polling for bot @JDINOWBOT id=8653301704 - 'JUST DO IT NOW'
+2026-05-03 06:40:12,657 - aiogram.event - INFO - Update id=554847472 is handled. Duration 532 ms by bot id=8653301704
+2026-05-03 06:40:14,523 - aiogram.event - INFO - Update id=554847473 is handled. Duration 426 ms by bot id=8653301704
+2026-05-03 06:42:26,152 - apscheduler.scheduler - INFO - Adding job tentatively -- it will be properly scheduled when the scheduler starts
+2026-05-03 06:42:26,153 - apscheduler.scheduler - INFO - Added job "workout_remind_print" to job store "default"
+2026-05-03 06:42:26,153 - apscheduler.scheduler - INFO - Scheduler started
+2026-05-03 06:42:26,153 - logger - INFO - Бот запущен и готов к работе
+2026-05-03 06:42:26,154 - aiogram.dispatcher - INFO - Start polling
+2026-05-03 06:42:26,698 - aiogram.dispatcher - INFO - Run polling for bot @JDINOWBOT id=8653301704 - 'JUST DO IT NOW'
+2026-05-03 06:42:41,644 - aiogram.event - INFO - Update id=554847474 is handled. Duration 1118 ms by bot id=8653301704
+2026-05-03 06:43:01,538 - aiogram.event - INFO - Update id=554847475 is handled. Duration 387 ms by bot id=8653301704
+2026-05-03 06:43:15,114 - aiogram.event - INFO - Update id=554847476 is handled. Duration 254 ms by bot id=8653301704
+2026-05-03 06:43:16,488 - logger - INFO - Пользователь 1445047630 удалил аккаунт
+2026-05-03 06:43:16,749 - aiogram.event - INFO - Update id=554847477 is handled. Duration 265 ms by bot id=8653301704
+2026-05-03 06:43:20,634 - aiogram.event - INFO - Update id=554847478 is handled. Duration 394 ms by bot id=8653301704
+2026-05-03 06:43:23,794 - aiogram.event - INFO - Update id=554847479 is handled. Duration 398 ms by bot id=8653301704
+2026-05-03 06:43:38,172 - aiogram.event - INFO - Update id=554847480 is handled. Duration 272 ms by bot id=8653301704
+2026-05-03 06:49:31,391 - apscheduler.scheduler - INFO - Adding job tentatively -- it will be properly scheduled when the scheduler starts
+2026-05-03 06:49:31,392 - apscheduler.scheduler - INFO - Added job "workout_remind_print" to job store "default"
+2026-05-03 06:49:31,392 - apscheduler.scheduler - INFO - Scheduler started
+2026-05-03 06:49:31,392 - logger - INFO - Бот запущен и готов к работе
+2026-05-03 06:49:31,393 - aiogram.dispatcher - INFO - Start polling
+2026-05-03 06:49:31,903 - aiogram.dispatcher - INFO - Run polling for bot @JDINOWBOT id=8653301704 - 'JUST DO IT NOW'
+2026-05-03 06:49:35,345 - aiogram.event - INFO - Update id=554847481 is not handled. Duration 1 ms by bot id=8653301704
+2026-05-03 06:49:38,183 - aiogram.event - INFO - Update id=554847482 is not handled. Duration 0 ms by bot id=8653301704
+2026-05-03 06:49:40,240 - aiogram.event - INFO - Update id=554847483 is not handled. Duration 1 ms by bot id=8653301704
+2026-05-04 16:03:50,289 - apscheduler.scheduler - INFO - Adding job tentatively -- it will be properly scheduled when the scheduler starts
+2026-05-04 16:03:50,290 - apscheduler.scheduler - INFO - Added job "workout_remind_print" to job store "default"
+2026-05-04 16:03:50,290 - apscheduler.scheduler - INFO - Scheduler started
+2026-05-04 16:03:50,290 - logger - INFO - Бот запущен и готов к работе
+2026-05-04 16:03:50,291 - aiogram.dispatcher - INFO - Start polling
+2026-05-04 16:03:50,814 - aiogram.dispatcher - INFO - Run polling for bot @JDINOWBOT id=8653301704 - 'JUST DO IT NOW'
+2026-05-04 16:03:50,939 - aiogram.event - INFO - Update id=554847485 is not handled. Duration 2 ms by bot id=8653301704
+2026-05-04 16:04:03,483 - aiogram.event - INFO - Update id=554847486 is not handled. Duration 1 ms by bot id=8653301704
+2026-05-04 16:26:20,107 - apscheduler.scheduler - INFO - Adding job tentatively -- it will be properly scheduled when the scheduler starts
+2026-05-04 16:26:20,107 - apscheduler.scheduler - INFO - Added job "workout_remind_print" to job store "default"
+2026-05-04 16:26:20,107 - apscheduler.scheduler - INFO - Scheduler started
+2026-05-04 16:26:20,107 - logger - INFO - Бот запущен и готов к работе
+2026-05-04 16:26:20,109 - aiogram.dispatcher - INFO - Start polling
+2026-05-04 16:26:20,618 - aiogram.dispatcher - INFO - Run polling for bot @JDINOWBOT id=8653301704 - 'JUST DO IT NOW'
+2026-05-04 16:26:24,727 - aiogram.event - INFO - Update id=554847487 is handled. Duration 841 ms by bot id=8653301704
+2026-05-04 16:26:29,038 - aiogram.event - INFO - Update id=554847488 is handled. Duration 419 ms by bot id=8653301704
+2026-05-04 16:26:33,667 - aiogram.event - INFO - Update id=554847489 is handled. Duration 308 ms by bot id=8653301704
+2026-05-04 16:26:36,132 - aiogram.event - INFO - Update id=554847490 is handled. Duration 274 ms by bot id=8653301704
+2026-05-04 16:26:41,587 - aiogram.event - INFO - Update id=554847491 is handled. Duration 282 ms by bot id=8653301704
+2026-05-04 16:26:47,965 - aiogram.event - INFO - Update id=554847492 is handled. Duration 482 ms by bot id=8653301704

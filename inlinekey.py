@@ -13,6 +13,9 @@ def main_menu():
         [
             InlineKeyboardButton(text="Лидерборд", callback_data="leaderboard"),
             InlineKeyboardButton(text="Продвинутый режим", callback_data="advanced_mode")
+        ],
+        [
+            InlineKeyboardButton(text="Питание", callback_data="nutrition")
         ]
     ]
     return InlineKeyboardMarkup(inline_keyboard=buttons)

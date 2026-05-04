@@ -3,7 +3,6 @@ from aiogram.filters import Command
 from aiogram.types import FSInputFile
 from aiogram.types import Message, CallbackQuery, InlineKeyboardMarkup, InlineKeyboardButton
 from aiogram.fsm.context import FSMContext
-from aiogram.exceptions import TelegramRetryAfter
 from aiogram.fsm.state import StatesGroup, State
 from config import ADMIN_IDS, GYM_WORKOUTS
 from logger import logger

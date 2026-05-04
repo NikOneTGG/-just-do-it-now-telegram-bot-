@@ -5,3 +5,4 @@ datafolder/
 *.db
 logs/
 *.log
+venv/
