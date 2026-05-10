@@ -4,6 +4,7 @@ from datetime import date
 from inlinekey import main_menu, profile_menu
 from db_instance import db
 from logger import logger
+from handlers.misc import declension_days
 
 router = Router()
 
@@ -30,20 +31,21 @@ async def get_profile_text(user_id: int) -> str:
     goal_text = goal_names.get(user.get("goal"), "Не выбрана")
 
     last_date = user.get("last_workout_date")
+
     if last_date:
         days_ago = (date.today() - date.fromisoformat(last_date)).days
-        last_text = f"{days_ago} дней назад"
+        last_info = f"{days_ago} {declension_days(days_ago)} назад"
     else:
-        last_text = "Ещё не тренировался"
+        last_info = "еще не было"
 
     response = (
         f"Твой профиль\n\n"
         f"Цель: {goal_text}\n"
         f"Уровень: {LEVEL_NAMES.get(user.get('level', 'easy'))}\n"
-        f"Страйк: {user.get('streak', 0)} дней\n"
+        f"Страйк: {user['streak']} {declension_days(user['streak'])}\n"
         f"Всего тренировок: {user.get('total_workouts', 0)}\n"
-        f"Последняя тренировка: {last_text}\n"
-    )
+        f"Последняя тренировка: {last_info}\n"
+)
     return response
 
 @router.callback_query(F.data == "profile")

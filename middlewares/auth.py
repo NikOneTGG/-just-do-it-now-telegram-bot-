@@ -27,12 +27,11 @@ class AuthMiddleware(BaseMiddleware):
         print(f"AuthMiddleware: user_id={user_id}, ADMIN_IDS={ADMIN_IDS}")
 
         if user_id and user_id not in ADMIN_IDS:
-            # блокировка запроса не от админа
+            # Блокировка запроса не от админа
             if isinstance(event, Message):
-                await event.answer()
-                await event.message.answer(MAINTENANCE_TEXT, reply_markup=SUPPORT_BUTTON)
+                await event.answer(MAINTENANCE_TEXT, reply_markup=SUPPORT_BUTTON)
             elif isinstance(event, CallbackQuery):
-                await event.answer()
+                await event.answer() 
                 await event.message.answer(MAINTENANCE_TEXT, reply_markup=SUPPORT_BUTTON)
             return
 

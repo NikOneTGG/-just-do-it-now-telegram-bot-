@@ -1,18 +1,23 @@
 from aiogram import Router, F
 from aiogram.types import CallbackQuery
-from datetime import date, timedelta
+from datetime import date
 from inlinekey import workout_menu
 from handlers.goals import get_workout_by_level
 from db_instance import db
-from logger import logger
+from collections import defaultdict
+from handlers.misc import declension_days
+import asyncio
 
 router = Router()
+user_lock = defaultdict(asyncio.Lock)
 
 # выполнение тренировки
 @router.callback_query(F.data == "workout_done")
 async def workout_done(callback: CallbackQuery):
     user_id = callback.from_user.id
-    user = await db.get_user(user_id)
+    # блокировка при одновременных запросах
+    async with user_lock[user_id]:
+            user = await db.get_user(user_id)
     if not user or not user.get("goal"):
         await callback.message.answer("Сначала выбери цель через /start")
         await callback.answer()
@@ -33,7 +38,7 @@ async def workout_done(callback: CallbackQuery):
 
     if last_date:
         days_diff = (today - last_date).days
-        if days_diff >= 1:
+        if days_diff > 1:
             user["streak"] = 0
             if gender == "female":
                 await callback.message.answer("Ты пропустила день! Страйк сброшен. 🔄")
@@ -67,7 +72,7 @@ async def workout_done(callback: CallbackQuery):
 
     await callback.message.delete()
     await callback.message.answer(
-        f"Молодец! Страйк: {user['streak']} дней\n"
+        f"Молодец! Страйк: {user['streak']} {declension_days(user['streak'])}\n"
         f"Всего тренировок: {user['total_workouts']}\n\n"
         f"Завтрашнее задание:\n{new_workout}",
         reply_markup=workout_menu()
